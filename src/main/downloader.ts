@@ -5,10 +5,18 @@ import { app } from 'electron';
 import type { DownloadTask, VideoQuality } from '../shared/types';
 import { getConfig, saveDownload } from './store';
 import { getVODInfo } from './twitch-api';
-import PQueue from 'p-queue';
 
-// Download queue
-const downloadQueue = new PQueue({ concurrency: 2 });
+// Download queue - will be initialized asynchronously
+let downloadQueue: any;
+
+// Initialize the queue
+async function initializeQueue() {
+  if (!downloadQueue) {
+    const { default: PQueue } = await import('p-queue');
+    downloadQueue = new PQueue({ concurrency: 2 });
+  }
+  return downloadQueue;
+}
 
 // Active downloads map
 const activeDownloads = new Map<string, {
@@ -54,8 +62,11 @@ export async function downloadVOD(
   // Save initial task
   saveDownload(task);
 
+  // Initialize queue if needed
+  const queue = await initializeQueue();
+
   // Add to queue
-  return downloadQueue.add(async () => {
+  return queue.add(async () => {
     try {
       task.status = 'downloading';
       saveDownload(task);
@@ -210,10 +221,12 @@ export function cancelDownload(taskId: string): boolean {
   return false;
 }
 
-export function getQueueSize(): number {
-  return downloadQueue.size + downloadQueue.pending;
+export async function getQueueSize(): Promise<number> {
+  const queue = await initializeQueue();
+  return queue.size + queue.pending;
 }
 
-export function updateQueueConcurrency(concurrency: number) {
-  downloadQueue.concurrency = concurrency;
+export async function updateQueueConcurrency(concurrency: number) {
+  const queue = await initializeQueue();
+  queue.concurrency = concurrency;
 }

@@ -19,12 +19,12 @@ export function setupIpcHandlers() {
     return getConfig();
   });
 
-  ipcMain.handle('save-config', (_, updates: Partial<Config>) => {
+  ipcMain.handle('save-config', async (_, updates: Partial<Config>) => {
     updateConfig(updates);
     
     // Update download queue concurrency if changed
     if (updates.maxConcurrentDownloads) {
-      updateQueueConcurrency(updates.maxConcurrentDownloads);
+      await updateQueueConcurrency(updates.maxConcurrentDownloads);
     }
     
     return getConfig();
