@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { Streamer, VOD } from '../shared/types';
-import { getConfig } from './store';
+import { getConfig, getCredentials } from './store';
 
 const TWITCH_API_BASE = 'https://api.twitch.tv/helix';
 
@@ -21,9 +21,9 @@ async function getAccessToken(): Promise<string> {
     return accessToken;
   }
 
-  const config = getConfig();
+  const { clientId, clientSecret } = getCredentials();
   
-  if (!config.twitchClientId || !config.twitchClientSecret) {
+  if (!clientId || !clientSecret) {
     throw new Error('Twitch Client ID and Secret not configured');
   }
 
@@ -33,8 +33,8 @@ async function getAccessToken(): Promise<string> {
       null,
       {
         params: {
-          client_id: config.twitchClientId,
-          client_secret: config.twitchClientSecret,
+          client_id: clientId,
+          client_secret: clientSecret,
           grant_type: 'client_credentials'
         }
       }
@@ -52,13 +52,13 @@ async function getAccessToken(): Promise<string> {
 
 async function makeApiRequest<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
   const token = await getAccessToken();
-  const config = getConfig();
+  const { clientId } = getCredentials();
 
   try {
     const response = await axios.get<T>(`${TWITCH_API_BASE}${endpoint}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Client-Id': config.twitchClientId
+        'Client-Id': clientId
       },
       params
     });
@@ -74,7 +74,7 @@ async function makeApiRequest<T>(endpoint: string, params?: Record<string, any>)
       const retryResponse = await axios.get<T>(`${TWITCH_API_BASE}${endpoint}`, {
         headers: {
           'Authorization': `Bearer ${newToken}`,
-          'Client-Id': config.twitchClientId
+          'Client-Id': clientId
         },
         params
       });
