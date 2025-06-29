@@ -1,0 +1,79 @@
+{
+  "name": "twitch-backup",
+  "version": "1.0.0",
+  "description": "A tool to backup VODs from streamers for creating clips",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev:main\" \"npm run dev:renderer\"",
+    "dev:main": "tsc -w -p tsconfig.main.json",
+    "dev:renderer": "vite",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build:renderer": "vite build",
+    "start": "electron .",
+    "dist": "npm run build && electron-builder",
+    "dist:all": "npm run build && electron-builder -mwl",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "release": "node scripts/build-all.js",
+    "release:all": "node scripts/build-all.js --all",
+    "check-deps": "node scripts/check-deps.js",
+    "test": "node scripts/test-mock.js",
+    "test:quick": "node scripts/test-mock.js --quick",
+    "test:app": "node scripts/test-app.js",
+    "test:e2e": "npm run build && electron scripts/test-e2e.js",
+    "test:screenshots": "npm run build && electron scripts/test-screenshots.js",
+    "test:screenshots:update": "npm run build && electron scripts/test-screenshots.js --update",
+    "compare-images": "node scripts/compare-images.js"
+  },
+  "keywords": [
+    "twitch",
+    "vod",
+    "downloader",
+    "electron"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.0",
+    "concurrently": "^8.2.2",
+    "electron": "^27.1.3",
+    "electron-builder": "^24.9.1",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.7",
+    "vite-plugin-electron": "^0.15.4",
+    "vite-plugin-electron-renderer": "^0.14.5"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "axios": "^1.6.2",
+    "cron-parser": "^4.9.0",
+    "electron-store": "^8.1.0",
+    "node-cron": "^3.0.3",
+    "p-queue": "^7.4.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.4.7"
+  },
+  "build": {
+    "appId": "ai.hyd.backup",
+    "productName": "Twitch Backup",
+    "directories": {
+      "output": "release/${version}"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": "default"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+# Electron Builder Configuration
+# This file can override package.json build config
+
+appId: ai.hyd.backup
+productName: Twitch Backup
+copyright: Copyright © 2024 ${author}
+
+# Directory configuration
+directories:
+  output: release/${version}
+  buildResources: build
+
+# Files to include
+files:
+  - dist
+  - package.json
+  - "!**/*.map"
+  - "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+  - "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}"
+  - "!**/node_modules/*.d.ts"
+  - "!**/node_modules/.bin"
+  - "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}"
+  - "!.editorconfig"
+  - "!**/._*"
+  - "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}"
+  - "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}"
+  - "!**/{appveyor.yml,.travis.yml,circle.yml}"
+  - "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+
+# Extra resources
+# extraResources:
+#   - from: "build/icon.*"
+#     to: "."
+#     filter: ["**/*"]
+
+# macOS configuration
+mac:
+  category: public.app-category.utilities
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+
+# Windows configuration  
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+  displayLanguageSelector: false
+  menuCategory: true
+  shortcutName: Twitch VOD Downloader
+
+# Linux configuration
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+  maintainer: electronjs.org
+  category: Utility
+
+# Publishing configuration
+publish:
+  provider: github
+  releaseType: release
+  publishAutoUpdate: true

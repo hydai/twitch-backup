@@ -1,0 +1,95 @@
+.settings {
+  max-width: 600px;
+}
+
+.settings.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+}
+
+.settings h3 {
+  margin: 0 0 24px 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.settings-section {
+  background: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.settings-section h4 {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #b0b0b0;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #999;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+}
+
+.help-text {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #666;
+}
+
+.help-text a {
+  color: #7a8a9a;
+  text-decoration: none;
+}
+
+.help-text a:hover {
+  text-decoration: underline;
+}
+
+.help-text.error {
+  color: #ff6b6b;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13px;
+}
+
+.status-ok {
+  color: #4caf50;
+}
+
+.status-error {
+  color: #ff6b6b;
+}
+
+.settings-actions {
+  margin-top: 24px;
+}
+
+.settings-actions button {
+  min-width: 120px;
+}

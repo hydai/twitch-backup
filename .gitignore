@@ -1,0 +1,104 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+release/
+dist-electron/
+out/
+
+# Test output
+test-downloads/
+test-userdata/
+test-screenshots/
+coverage/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Electron
+.electron/
+electron-builder.yml.backup
+
+# Python (for build scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+ENV/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+
+# Package files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Security
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+
+# Custom
+build/icon.png
+build/icon.icns
+build/icon.ico
+build/icon.iconset/
+
+# npm/yarn
+.npm
+.yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
